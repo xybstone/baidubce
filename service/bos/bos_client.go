@@ -4,14 +4,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/WilliamKyle/baidubce/auth"
-	"github.com/WilliamKyle/baidubce/httplib"
-	"github.com/WilliamKyle/baidubce/utils"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/xybstone/baidubce/auth"
+	"github.com/xybstone/baidubce/httplib"
+	"github.com/xybstone/baidubce/utils"
 )
 
 const (

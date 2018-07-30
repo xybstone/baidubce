@@ -5,16 +5,17 @@ import (
 	"crypto/md5"
 	"crypto/rand"
 	"fmt"
-	"github.com/WilliamKyle/baidubce/auth"
 	"io"
 	"io/ioutil"
 	"os"
 	"testing"
+
+	"github.com/xybstone/baidubce/auth"
 )
 
 const (
-	DefaultAccessKeyId     = "0b0f67dfb88244b289b72b142befad0c"
-	DefaultSecretAccessKey = "bad522c2126a4618a8125f4b6cf6356f"
+	DefaultAccessKeyId     = ""
+	DefaultSecretAccessKey = ""
 	DefaultDebugHost       = "bj.bcebos.com"
 	TestBukketName         = "baidubce-golang-sdk-test"
 	TestObjectName         = "baidubce-golang-sdk-test-object"

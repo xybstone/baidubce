@@ -4,8 +4,8 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"fmt"
-	"github.com/WilliamKyle/baidubce/httplib"
-	"github.com/WilliamKyle/baidubce/utils"
+	"github.com/xybstone/baidubce/httplib"
+	"github.com/xybstone/baidubce/utils"
 	"sort"
 	"strings"
 )
