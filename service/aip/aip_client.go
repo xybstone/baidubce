@@ -146,7 +146,7 @@ func (c AipClient) FaceImageAudit(r io.Reader) (*ImageAuditResponse, error) {
 		},
 		Type: "application/x-www-form-urlencoded",
 		Body: bytes.NewReader([]byte(v.Encode())),
-		Path: c.APIVersion + "/img_censor/user_defined",
+		Path: c.APIVersion + "/face_audit",
 	}
 
 	auth.Debug = false
