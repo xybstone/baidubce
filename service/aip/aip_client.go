@@ -87,12 +87,50 @@ const (
 )
 
 type ImageAuditResponse struct {
-	ErrorCode      int `json:"error_code"`
-	ConclusionType int `json:"conclusionType"`
+	ErrorCode      int         `json:"error_code"`
+	ConclusionType int         `json:"conclusionType"`
+	Conclusion     string      `json:"conclusion"`
+	Probability    float64     `json:"probability"`
+	Data           interface{} `json:"data"`
 }
 
 /* 图像审核 */
 func (c AipClient) ImageAudit(r io.Reader) (*ImageAuditResponse, error) {
+	imageData, err := ioutil.ReadAll(r)
+	if err != nil {
+		return nil, err
+	}
+	v := url.Values{}
+	v.Set("image", base64.StdEncoding.EncodeToString(imageData))
+	timestamp := utils.GetHttpHeadTimeStamp()
+
+	req := &httplib.Request{
+		Method: httplib.POST,
+		Headers: map[string]string{
+			"Host": c.GetHost(),
+		},
+		Type: "application/x-www-form-urlencoded",
+		Body: bytes.NewReader([]byte(v.Encode())),
+		Path: c.APIVersion + "/",
+	}
+
+	auth.Debug = false
+	authorization := auth.Sign(c.Credential, timestamp, req.Method, req.Path, req.Query, req.Headers)
+	req.Headers[httplib.AUTHORIZATION] = authorization
+
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+	var response ImageAuditResponse
+	if err := json.Unmarshal(body, &response); err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
+
+/*头像审核*/
+func (c AipClient) FaceImageAudit(r io.Reader) (*ImageAuditResponse, error) {
 	imageData, err := ioutil.ReadAll(r)
 	if err != nil {
 		return nil, err
@@ -125,4 +163,3 @@ func (c AipClient) ImageAudit(r io.Reader) (*ImageAuditResponse, error) {
 	}
 	return &response, nil
 }
-

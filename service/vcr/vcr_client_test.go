@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	DefaultAccessKeyId     = ""
-	DefaultSecretAccessKey = ""
+	DefaultAccessKeyId     = "4d365da948f64a08bd5ef5c967b1abca"
+	DefaultSecretAccessKey = "a65790f45eee44cfa84cf8091587fa4b"
 	DefaultDebugHost       = "vcr.bj.baidubce.com"
 )
 
@@ -58,7 +58,7 @@ func TestPutText(t *testing.T) {
 	}
 	c.Host = DebugHost
 
-	o, err := c.PuTText("习近平")
+	o, err := c.PuTText("江伟东")
 	if err != nil {
 		t.Errorf("PuTText failed.")
 		t.Errorf(err.Error())
