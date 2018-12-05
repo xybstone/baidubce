@@ -111,7 +111,38 @@ func (c AipClient) ImageAudit(r io.Reader) (*ImageAuditResponse, error) {
 		},
 		Type: "application/x-www-form-urlencoded",
 		Body: bytes.NewReader([]byte(v.Encode())),
-		Path: c.APIVersion + "/",
+		Path: c.APIVersion + "/img_censor/user_defined",
+	}
+
+	auth.Debug = false
+	authorization := auth.Sign(c.Credential, timestamp, req.Method, req.Path, req.Query, req.Headers)
+	req.Headers[httplib.AUTHORIZATION] = authorization
+
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+	var response ImageAuditResponse
+	if err := json.Unmarshal(body, &response); err != nil {
+		return nil, err
+	}
+	return &response, nil
+}
+
+func (c AipClient) ImageUrlAudit(u string) (*ImageAuditResponse, error) {
+	v := url.Values{}
+	v.Set("imgUrl", u)
+
+	timestamp := utils.GetHttpHeadTimeStamp()
+
+	req := &httplib.Request{
+		Method: httplib.POST,
+		Headers: map[string]string{
+			"Host": c.GetHost(),
+		},
+		Type: "application/x-www-form-urlencoded",
+		Body: bytes.NewReader([]byte(v.Encode())),
+		Path: c.APIVersion + "/img_censor/user_defined",
 	}
 
 	auth.Debug = false
